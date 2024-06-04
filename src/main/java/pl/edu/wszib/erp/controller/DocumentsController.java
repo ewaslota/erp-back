@@ -17,8 +17,8 @@ public class DocumentsController {
     }
 
     @GetMapping
-    public List<Document> list() {
-        return service.list();
+    public List<Document> list(@RequestParam(required = false, defaultValue = "title") String column, @RequestParam(required = false, defaultValue = "asc") String order) {
+        return service.list(column, order);
     }
 
     @GetMapping("/{id}")

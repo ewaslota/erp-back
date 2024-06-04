@@ -17,7 +17,7 @@ public class Document {
     private String title;
     private String description;
     @CreationTimestamp
-    private Instant cratedAt;
+    private Instant createdAt;
     @UpdateTimestamp
     private Instant updatedAt;
 
@@ -45,12 +45,12 @@ public class Document {
         this.description = description;
     }
 
-    public Instant getCratedAt() {
-        return cratedAt;
+    public Instant getCreatedAt() {
+        return createdAt;
     }
 
-    public void setCratedAt(Instant cratedAt) {
-        this.cratedAt = cratedAt;
+    public void setCreatedAt(Instant createdAt) {
+        this.createdAt = createdAt;
     }
 
     public Instant getUpdatedAt() {
