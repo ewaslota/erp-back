@@ -1,11 +1,14 @@
 package pl.edu.wszib.erp.service;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import pl.edu.wszib.erp.model.Document;
 import pl.edu.wszib.erp.repository.DocumentsRepository;
 
-import java.util.List;
+import java.util.ArrayList;
 
 @Service
 public class DocumentsService implements CrudService<Document, Long> {
@@ -16,20 +19,24 @@ public class DocumentsService implements CrudService<Document, Long> {
         this.repository = repository;
     }
 
-    @Override
-    public List<Document> list() {
-        return repository.findAll();
-    }
+    public Page<Document> list(int page, int size, String[] sortColumns, String[] sortDirections) {
+        ArrayList<Sort.Order> sortOrders = new ArrayList<>();
 
-    public List<Document> list(String sortBy, String sortOrder) {
-        return repository.findAll(
-                Sort.by(
-                        sortOrder.equals("asc") ?
-                                Sort.Direction.ASC :
-                                Sort.Direction.DESC,
-                                    sortBy
-                )
-        );
+        for (int i = 0; i < sortColumns.length; i++) {
+
+            String sortColumn = sortColumns[i];
+            Sort.Direction sortDirection =
+                    sortDirections.length > i && sortDirections[i].equalsIgnoreCase("desc")
+                            ? Sort.Direction.DESC
+                            : Sort.Direction.ASC;
+
+
+            sortOrders.add(new Sort.Order(sortDirection, sortColumn));
+        }
+
+        Pageable pageable = PageRequest.of(page, size, Sort.by(sortOrders));
+
+        return repository.findAll(pageable);
     }
 
     @Override

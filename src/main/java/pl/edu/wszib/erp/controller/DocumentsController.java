@@ -1,10 +1,9 @@
 package pl.edu.wszib.erp.controller;
 
+import org.springframework.data.domain.Page;
 import pl.edu.wszib.erp.model.Document;
 import pl.edu.wszib.erp.service.DocumentsService;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/documents")
@@ -17,8 +16,13 @@ public class DocumentsController {
     }
 
     @GetMapping
-    public List<Document> list(@RequestParam(required = false, defaultValue = "title") String column, @RequestParam(required = false, defaultValue = "asc") String order) {
-        return service.list(column, order);
+    public Page<Document> list(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "25") int size,
+            @RequestParam(defaultValue = "title") String[] sortColumns,
+            @RequestParam(defaultValue = "asc") String[] sortDirections
+    ) {
+        return service.list(page, size, sortColumns, sortDirections);
     }
 
     @GetMapping("/{id}")
