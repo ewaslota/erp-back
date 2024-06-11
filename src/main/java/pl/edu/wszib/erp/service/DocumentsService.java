@@ -7,6 +7,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import pl.edu.wszib.erp.model.Document;
 import pl.edu.wszib.erp.repository.DocumentsRepository;
+import pl.edu.wszib.erp.specifications.DocumentSpecifications;
 
 import java.util.ArrayList;
 
@@ -19,7 +20,7 @@ public class DocumentsService implements CrudService<Document, Long> {
         this.repository = repository;
     }
 
-    public Page<Document> list(int page, int size, String[] sortColumns, String[] sortDirections) {
+    public Page<Document> list(int page, int size, String[] sortColumns, String[] sortDirections, String searchBy) {
         ArrayList<Sort.Order> sortOrders = new ArrayList<>();
 
         for (int i = 0; i < sortColumns.length; i++) {
@@ -36,7 +37,7 @@ public class DocumentsService implements CrudService<Document, Long> {
 
         Pageable pageable = PageRequest.of(page, size, Sort.by(sortOrders));
 
-        return repository.findAll(pageable);
+        return repository.findAll(DocumentSpecifications.documentSpecification(searchBy), pageable);
     }
 
     @Override

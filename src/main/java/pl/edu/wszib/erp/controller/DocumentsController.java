@@ -20,9 +20,10 @@ public class DocumentsController {
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "25") int size,
             @RequestParam(defaultValue = "title") String[] sortColumns,
-            @RequestParam(defaultValue = "asc") String[] sortDirections
+            @RequestParam(defaultValue = "asc") String[] sortDirections,
+            @RequestParam(defaultValue = "title") String searchBy
     ) {
-        return service.list(page, size, sortColumns, sortDirections);
+        return service.list(page, size, sortColumns, sortDirections, searchBy);
     }
 
     @GetMapping("/{id}")

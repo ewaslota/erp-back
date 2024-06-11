@@ -4,7 +4,7 @@ import org.springframework.data.domain.Page;
 
 public interface CrudService<T, ID> {
 
-  Page<T> list(int page, int size, String[] sortColumns, String[] sortDirections);
+  Page<T> list(int page, int size, String[] sortColumns, String[] sortDirections, String searchBy);
   T get(ID id);
   T create(T t);
   T update(T t);
