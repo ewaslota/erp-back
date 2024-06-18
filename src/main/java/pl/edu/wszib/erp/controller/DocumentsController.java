@@ -6,7 +6,7 @@ import pl.edu.wszib.erp.service.DocumentsService;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/documents")
+@RequestMapping("/api/documents")
 public class DocumentsController {
 
     private final DocumentsService service;
